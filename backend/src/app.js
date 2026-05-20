@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
+const path = require('path');
 const History = require('./models/History');
 const { parseExcel } = require('./services/excelParser');
 const { generatePDF } = require('./services/pdfGenerator');
@@ -28,14 +29,18 @@ app.get('/history', async (req, res) => {
     try {
         const logs = await History.find().sort({ date: -1 });
         res.json(logs);
-    } catch (err) { res.status(500).send("Error fetching history"); }
+    } catch (err) { 
+        res.status(500).send("Error fetching history"); 
+    }
 });
 
 app.delete('/history/:id', async (req, res) => {
     try {
         await History.findByIdAndDelete(req.params.id);
         res.json({ success: true });
-    } catch (err) { res.status(500).send("Error deleting"); }
+    } catch (err) { 
+        res.status(500).send("Error deleting"); 
+    }
 });
 
 // --- GENERATION ---
@@ -49,7 +54,9 @@ app.post('/preview', upload.single('file'), async (req, res) => {
             ...row, size: i < bC ? 'big' : 'small'
         }));
         res.json(formattedRows);
-    } catch (err) { res.status(500).json({ error: "Preview failed" }); }
+    } catch (err) { 
+        res.status(500).json({ error: "Preview failed" }); 
+    }
 });
 
 app.post('/generate-pdf', upload.single('file'), async (req, res) => {
@@ -69,11 +76,12 @@ app.post('/generate-pdf', upload.single('file'), async (req, res) => {
         const pdfBuf = await generatePDF(formattedRows, { oa, footerText: instructions });
         res.setHeader('Content-Type', 'application/pdf');
         res.send(pdfBuf);
-    } catch (err) { res.status(500).send(err.message); }
+    } catch (err) { 
+        res.status(500).send(err.message); 
+    }
 });
 
-const path = require('path');
-
+// --- STATIC FRONTEND SERVING ---
 // Point Express to the production compiled folder 'build' inside frontend
 const frontendPath = path.join(process.cwd(), 'frontend', 'build');
 
