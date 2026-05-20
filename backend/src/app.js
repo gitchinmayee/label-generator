@@ -74,12 +74,12 @@ app.post('/generate-pdf', upload.single('file'), async (req, res) => {
 
 const path = require('path');
 
-// Move up two levels from backend/src to find frontend at the root
-app.use(express.static(path.join(__dirname, '../../frontend')));
+// Go up two levels from 'backend/src' to reach the absolute root folder, then go into 'frontend'
+const frontendPath = path.resolve(__dirname, '..', '..', 'frontend');
 
-// Serve the index.html file for any route not caught by our API
+app.use(express.static(frontendPath));
+
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/index.html'));
+    res.sendFile(path.join(frontendPath, 'index.html'));
 });
-
 module.exports = app;
