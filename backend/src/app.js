@@ -74,12 +74,20 @@ app.post('/generate-pdf', upload.single('file'), async (req, res) => {
 
 const path = require('path');
 
-// Go up two levels from 'backend/src' to reach the absolute root folder, then go into 'frontend'
-const frontendPath = path.resolve(__dirname, '..', '..', 'frontend');
+// process.cwd() gives the absolute root workspace root directory directly.
+// If your index.html is directly in frontend:
+const frontendPath = path.join(process.cwd(), 'frontend'); 
+
+// NOTE: If you are using React/Vite, change the line above to:
+// const frontendPath = path.join(process.cwd(), 'frontend', 'dist');
+// If using Create-React-App, change it to:
+// const frontendPath = path.join(process.cwd(), 'frontend', 'build');
 
 app.use(express.static(frontendPath));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
 });
+
+
 module.exports = app;
