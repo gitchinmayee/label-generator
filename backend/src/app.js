@@ -72,4 +72,13 @@ app.post('/generate-pdf', upload.single('file'), async (req, res) => {
     } catch (err) { res.status(500).send(err.message); }
 });
 
+const path = require('path');
+
+// Serve static files from the frontend directory
+app.use(express.static(path.join(__dirname, '../../frontend')));
+
+// Fallback to serve index.html for the root route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../frontend/index.html'));
+});
 module.exports = app;
