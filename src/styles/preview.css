@@ -1,0 +1,39 @@
+/* The container must be relative so boxes can be positioned at exact MM coordinates */
+.preview-stage {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #000;
+  width: 250mm; /* Large enough for 8 small columns */
+  height: 120mm; /* Large enough for 4 rows */
+  margin: 20px auto;
+  box-sizing: content-box;
+}
+
+.legend-box {
+  position: absolute; /* This allows boxes to have different widths on the same row */
+  border: 0.2mm solid #000;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  box-sizing: border-box;
+  line-height: 1.1;
+}
+
+/* Exact Scaling */
+.legend-box.small {
+  width: 31mm;
+  height: 29.48mm;
+  font-size: 8pt;
+}
+
+.legend-box.big {
+  width: 65.44mm; /* This is physically wider than 'small' */
+  height: 29.61mm;
+  font-size: 10pt;
+  z-index: 5; /* Ensures big boxes overlap correctly */
+}

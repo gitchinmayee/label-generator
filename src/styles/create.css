@@ -1,0 +1,36 @@
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  margin-bottom: 18px;
+}
+
+.top-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.top-row input,
+.top-row button {
+  height: 34px;
+  border: 1px solid #c9d2e3;
+  border-radius: 8px;
+  padding: 0 10px;
+  background: white;
+}
+
+.top-row button {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.preview-section {
+  margin-top: 12px;
+}
+
+.preview-section h3 {
+  margin: 0 0 12px 0;
+}
